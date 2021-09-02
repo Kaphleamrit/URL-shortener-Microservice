@@ -38,8 +38,8 @@ async function addEntry(toAdd) {
   await newUrl.save();
 }
 
-async function getEntry(id) {
-  const res = await urlMapModel.find({ _id: id });
+async function getEntry(regex) {
+  const res = await urlMapModel.find(regex);
   return res;
 }
 
@@ -60,7 +60,7 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-app.post("/api/shorturl", function (req, res) {
+app.post("/api/shorturl", async function (req, res) {
   let url = req.body.url;
 
   const regex = /^https?:\/\//i;
@@ -80,29 +80,52 @@ app.post("/api/shorturl", function (req, res) {
           error: "invalid url",
         });
       else {
-        let short_url = -1;
-
-        getSizeOfDb()
-          .then((len) => {
-            short_url = len;
-            addEntry({ _id: len, url: formUrl }).catch((err) =>
-              console.log(err)
-            );
+        getEntry({ url: url }).then((entry) => {
+          if (entry.length > 0) {
             res.json({
-              original_url: url,
-              short_url: short_url,
+              original_url: entry[0].url,
+              short_url: entry[0]._id,
             });
-          })
-          .catch((err) => console.log(err));
+          } else {
+            let short_url = -1;
+
+            getSizeOfDb()
+              .then((len) => {
+                short_url = len;
+                addEntry({ _id: len, url: url }).catch((err) =>
+                  console.log(err)
+                );
+                res.json({
+                  original_url: url,
+                  short_url: short_url,
+                });
+              })
+              .catch((err) => console.log(err));
+          }
+        });
       }
     });
   }
 });
 
-app.get("/api/shorturl/:id", function (req, res) {
+app.get("/api/shorturl/:id", async function (req, res) {
+const dbSize = await getSizeOfDb();
+if(dbSize <= req.params.id) res.json({
+  "error": "No such URL found for the given input"
+})
+
+else {
+
   getEntry({ _id: req.params.id })
-    .then((res) => console.log(res))
+    .then((result) => {
+      const url = result[0].url;
+
+      res.writeHead(301, { Location: url });
+      res.end();
+    })
     .catch((err) => console.log(err));
+
+  }
 });
 
 app.listen(port, function () {

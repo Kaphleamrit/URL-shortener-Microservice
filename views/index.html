@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 
 <html>
-
-<head>
+  <head>
     <title>URL Shortener Microservice</title>
     <link href="/public/style.css" rel="stylesheet" type="text/css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>URL Shortener Microservice</h1>
     <main>
-        <section>
-            <form method="POST" action = "/api/shorturl">
-                    <input id="url_input" type="text" name="url" placeholder="https://www.google.com" /><br>
-                    <input type="submit" value="POST URL" />
-            </form>
-        </section>
+      <section>
+        <form method="POST" action="/api/shorturl">
+          <input
+            id="url_input"
+            type="text"
+            name="url"
+            placeholder="https://www.google.com"
+          /><br />
+          <input type="submit" value="POST URL" />
+        </form>
+      </section>
     </main>
-</body>
-
+  </body>
 </html>
