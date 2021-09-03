@@ -109,23 +109,20 @@ app.post("/api/shorturl", async function (req, res) {
 });
 
 app.get("/api/shorturl/:id", async function (req, res) {
-const dbSize = await getSizeOfDb();
-if(dbSize <= req.params.id) res.json({
-  "error": "No such URL found for the given input"
-})
-
-else {
-
-  getEntry({ _id: req.params.id })
-    .then((result) => {
-      const url = result[0].url;
-
-      res.writeHead(301, { Location: url });
-      res.end();
-    })
-    .catch((err) => console.log(err));
-
+  const dbSize = await getSizeOfDb();
+  if (dbSize <= req.params.id)
+    res.json({
+      error: "No such URL found for the given input",
+    });
+  else {
+    
+    let entry = await getEntry({ _id: req.params.id });
+    const url = entry[0].url;    
+    res.writeHead(301, {Location: url });
+    res.end();
+    
   }
+
 });
 
 app.listen(port, function () {
