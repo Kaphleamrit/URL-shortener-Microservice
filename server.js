@@ -74,35 +74,30 @@ app.post("/api/shorturl", async function (req, res) {
   } else {
     formUrl = url.replace(regex, "");
 
-    dns.lookup(formUrl, (err, address, family) => {
+    dns.lookup(formUrl, async (err, address, family) => {
       if (err)
         res.json({
           error: "invalid url",
         });
       else {
-        getEntry({ url: url }).then((entry) => {
-          if (entry.length > 0) {
-            res.json({
-              original_url: entry[0].url,
-              short_url: entry[0]._id,
-            });
-          } else {
-            let short_url = -1;
+        const entry = await getEntry({ url: url });
+        if (entry.length > 0) {
+          res.json({
+            original_url: entry[0].url,
+            short_url: entry[0]._id,
+          });
+        } else {
+          let short_url = -1;
 
-            getSizeOfDb()
-              .then((len) => {
-                short_url = len;
-                addEntry({ _id: len, url: url }).catch((err) =>
-                  console.log(err)
-                );
-                res.json({
-                  original_url: url,
-                  short_url: short_url,
-                });
-              })
-              .catch((err) => console.log(err));
-          }
-        });
+          const len = await getSizeOfDb();
+          short_url = len;
+          addEntry({ _id: len, url: url }).catch((err) => console.log(err));
+          res.json({
+            original_url: url,
+            short_url: short_url,
+          });
+        }
+
       }
     });
   }
@@ -115,14 +110,11 @@ app.get("/api/shorturl/:id", async function (req, res) {
       error: "No such URL found for the given input",
     });
   else {
-    
     let entry = await getEntry({ _id: req.params.id });
-    const url = entry[0].url;    
-    res.writeHead(301, {Location: url });
+    const url = entry[0].url;
+    res.writeHead(301, { Location: url });
     res.end();
-    
   }
-
 });
 
 app.listen(port, function () {
