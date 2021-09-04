@@ -1,5 +1,5 @@
 :root {
-    --white: white;
+    --white: #c5c3c1;
 }
 
 
@@ -51,6 +51,7 @@ input[type='text'] {
     height: 35px;
     text-align: center;
     border: 0;
+    background: var(--white);
     box-shadow: 2px 1px 2px 2px var(--white);
 border-radius: 10px;
 }
