@@ -77,13 +77,17 @@ flex-direction: column;
 padding: 0px 5px 10px 5px;
 }
 
-#shortUrlCreation, #exampleUsage {
+#shortUrlCreation, #exampleUsage, #listCollection {
    border:1px solid #2574a9;
    padding: 10px;
    box-shadow: 1px 1px 1px 1px blue;
 }
 
 #shortUrlCreation {
+    margin-bottom: 20px;
+}
+
+#exampleUsage {
     margin-bottom: 20px;
 }
 
@@ -103,8 +107,8 @@ footer {
         justify-content: center;
         column-gap: 200px;
     }
-    #shortUrlCreation, #exampleUsage {
-        width: 500px;
+    #shortUrlCreation, #exampleUsage, #listCollection {
+        width: 400px;
         height: 200px;
      
      }

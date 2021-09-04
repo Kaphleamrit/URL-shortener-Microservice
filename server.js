@@ -43,6 +43,11 @@ async function getEntry(regex) {
   return res;
 }
 
+async function getAll() {
+  const res = await urlMapModel.find();
+  return res;
+}
+
 async function getSizeOfDb() {
   const list = await urlMapModel.find();
   return list.length;
@@ -121,6 +126,18 @@ app.get("/api/shorturl/:id", async function (req, res) {
     console.log(e);
   }
 });
+
+app.get('/api/list', async (req, res) => {
+
+  try {
+  const data = await getAll();
+res.json(data);
+  } catch(e) {
+    console.log(e);
+  }
+})
+
+
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
