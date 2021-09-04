@@ -2,6 +2,9 @@
 
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL Shortener Microservice</title>
     <link href="/public/style.css" rel="stylesheet" type="text/css" />
   </head>
@@ -20,6 +23,22 @@
           <input type="submit" value="POST URL" />
         </form>
       </section>
+
+      <div class = "documentation">
+      <section id="shortUrlCreation">
+        <h2>short URL creation</h2>
+        <h2>Example</h2>
+        <code> POST [project_url]/api/shorturl - https://www.google.com</code>
+      </section>
+
+      <section id = "exampleUsage"> 
+        <h2>Example Usage</h2>
+        <a>[this_project_url]/api/shorturl/0</a>
+        <h2>Will redirect to:</h2>
+        <code>https://www.google.com</code>
+      </section>
+      </div>
+
     </main>
   </body>
 </html>

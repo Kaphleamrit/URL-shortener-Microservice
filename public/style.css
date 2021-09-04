@@ -1,3 +1,8 @@
+:root {
+    --white: white;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -5,10 +10,11 @@ body {
    background-size: cover;
     text-align: center;
     line-height: 1.4em;
+    min-height: 100vh;
 }
 
 h1 {
-    color: white;
+    color: var(--white);
     font-family: 'monospace';
     line-height: 1.3;
 }
@@ -31,7 +37,7 @@ a {
 }
 
 form { 
-    height: 60vh;
+    margin-bottom: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +51,7 @@ input[type='text'] {
     height: 35px;
     text-align: center;
     border: 0;
-    box-shadow: 2px 1px 2px 2px white;
+    box-shadow: 2px 1px 2px 2px var(--white);
 border-radius: 10px;
 }
 
@@ -53,12 +59,51 @@ input[type='submit'] {
     width: 200px;
     height: 35px;
     background-color: transparent;
-    color: white;
+    color: var(--white);
     border: 2px solid rgb(23, 95, 23);
     transition: 0.3s ease;
     margin-top: 40px;
+
 }
 input[type='submit']:hover {
     background-color: rgb(23, 95, 23);
 
 }
+
+.documentation {
+color: var(--white);
+display: flex;
+flex-direction: column;
+padding: 0px 5px 10px 5px;
+}
+
+#shortUrlCreation, #exampleUsage {
+   border:1px solid #2574a9;
+   padding: 10px;
+   box-shadow: 1px 1px 1px 1px blue;
+}
+
+#shortUrlCreation {
+    margin-bottom: 20px;
+}
+
+@media screen and (min-width: 768px){
+
+    form {
+        margin-top:200px;
+    }
+
+    .documentation {
+        flex-direction: row;
+        justify-content: center;
+        column-gap: 200px;
+    }
+    #shortUrlCreation, #exampleUsage {
+        width: 500px;
+        height: 200px;
+     
+     }
+     
+    
+}
+

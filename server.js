@@ -56,9 +56,6 @@ app.get("/", function (req, res) {
   res.sendFile(process.cwd() + "/views/index.html");
 });
 
-app.get("/api/hello", function (req, res) {
-  res.json({ greeting: "hello API" });
-});
 
 app.post("/api/shorturl", async function (req, res) {
   let url = req.body.url;
@@ -80,6 +77,7 @@ app.post("/api/shorturl", async function (req, res) {
           error: "invalid url",
         });
       else {
+        try {
         const entry = await getEntry({ url: url });
         if (entry.length > 0) {
           res.json({
@@ -97,13 +95,17 @@ app.post("/api/shorturl", async function (req, res) {
             short_url: short_url,
           });
         }
-
+        } catch(e) {
+          console.log(e);
+        }
       }
     });
   }
 });
 
 app.get("/api/shorturl/:id", async function (req, res) {
+
+  try {
   const dbSize = await getSizeOfDb();
   if (dbSize <= req.params.id)
     res.json({
@@ -114,6 +116,9 @@ app.get("/api/shorturl/:id", async function (req, res) {
     const url = entry[0].url;
     res.writeHead(301, { Location: url });
     res.end();
+  }
+  } catch(e) {
+    console.log(e);
   }
 });
 
